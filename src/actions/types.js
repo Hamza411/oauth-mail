@@ -3,4 +3,3 @@ export const SIGN_OUT = "SIGN_OUT";
 // export const SEND_MESSAGE = "SEND_MESSAGE";
 export const FETCH_MESSAGES = "FETCH_MESSAGES"; //for multiple
 // export const FETCH_MESSAGE = "FETCH_MESSAGE"; //for single
-// export const DELETE_MESSAGE = "DELETE_MESSAGE";

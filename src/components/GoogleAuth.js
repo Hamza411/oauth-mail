@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { signIn, signOut } from "../actions";
@@ -7,8 +8,10 @@ class GoogleAuth extends Component {
         window.gapi.load("client:auth2", () => {
             window.gapi.client.init({        /* ayns actions or async api req*/
                 clientId: "1075903194307-lgglf5n8qsk3lfhr2j4k4512k60scmh7.apps.googleusercontent.com",
-                scope: "https://mail.google.com/"
+                scope: "https://mail.google.com/",
+                setApiKey: "AIzaSyDqTkgLrbg4aJy9bPhT2iL5ETNJ43y6CB4",
             }).then(() => {
+                // console.log(window.gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token)
                 this.auth = window.gapi.auth2.getAuthInstance();
                 this.onAuthChange(this.auth.isSignedIn.get());
                 this.auth.isSignedIn.listen(this.onAuthChange)
@@ -16,12 +19,20 @@ class GoogleAuth extends Component {
         });
     }
 
+
     onAuthChange = (isSignedIn) => {
         if (isSignedIn) {
-            this.props.signIn(this.auth.currentUser.get().getId());
-            console.log("id", this.auth.currentUser.get().getId());
-            console.log("Complete User",this.auth.currentUser.get());
-            console.log("Email",this.auth.currentUser.get().getBasicProfile().getEmail());
+            const id = this.auth.currentUser.get().getId();
+            const email = this.auth.currentUser.get().getBasicProfile().getEmail()
+            const token = this.auth.currentUser.get().getAuthResponse().access_token
+            localStorage.setItem("token", token);
+            localStorage.setItem("email", email);
+            this.props.signIn(id, email);
+            // console.log("Complete Object", this.auth.currentUser.get());
+            // console.log("id", this.auth.currentUser.get().getId());
+            // console.log("Email", this.auth.currentUser.get().getBasicProfile().getEmail());
+            // console.log("access token", token)
+
         } else {
             this.props.signOut();
         }
