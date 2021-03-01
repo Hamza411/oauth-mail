@@ -5,23 +5,30 @@ import { fetchMessages } from '../../actions';
 import GoogleAuth from '../GoogleAuth';
 
 class MailList extends Component {
-    
+
     componentDidMount() {
         this.props.fetchMessages()
     }
 
     renderList = () => {
-        return this.props.mails.map((thread, index) => {
-            return (
-                <div className="item" key={index}>
-                    <div className="content">
-                        {thread.snippet}
-                        {console.log("*************", thread)}
-                        {/* <div className="description">{stream.description}</div> */}
+        if (this.props.mails[0]) {
+            const data = this.props.mails[0].threads;
+            console.log(data)
+            return data.map((thread, index) => {
+                return (
+                    <div className="item" key={index}>
+                        <div className="content">
+                            {console.log(thread)}
+                            <Link to={`/mails/${thread.id}`} className="header">
+                                {thread.snippet}
+                            </Link>
+                            {/* {console.log("*****", this.props.mails[0].threads[0])} */}
+                            {/* <div className="description">{stream.description}</div> */}
+                        </div>
                     </div>
-                </div>
-            )
-        })
+                )
+            })
+        }
     }
 
     renderCreate() {
@@ -41,9 +48,9 @@ class MailList extends Component {
             <div>
                 <GoogleAuth />
                 <h2>Mails</h2>
-                {/* <div className="ui celled list">{this.renderList()}</div> */}
-                {this.renderList()}
                 {this.renderCreate()}
+                <div className="ui celled list">{this.renderList()}</div>
+                {/* {this.renderList()} */}
             </div>
         );
     }
