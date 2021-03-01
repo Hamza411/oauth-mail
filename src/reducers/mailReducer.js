@@ -10,7 +10,7 @@ const mailReducer = (state = {}, action) => {
         case FETCH_MESSAGES:
             return { ...state, mails: action.payload };
         case FETCH_MESSAGE:
-            return { ...state, [action.payload.id]: action.payload.id };
+            return { ...state, mail: action.payload }
         case SEND_MESSAGE:
             return { ...state, [action.payload.id]: action.payload };
         default:
