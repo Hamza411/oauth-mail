@@ -1,10 +1,9 @@
 import {
-    // SEND_MESSAGE,
+    SEND_MESSAGE,
     FETCH_MESSAGES,
-    // FETCH_MESSAGE,
-    // DELETE_MESSAGE
+    // FETCH_MESSAGE
 } from "../actions/types";
-import _ from "lodash";
+// import _ from "lodash";
 
 const mailReducer = (state = {}, action) => {
     switch (action.type) {
@@ -12,8 +11,8 @@ const mailReducer = (state = {}, action) => {
             return { ...state, mails: action.payload };
         // case FETCH_MESSAGE:
         //     return { ...state, [action.payload.id]: action.payload };
-        // case SEND_MESSAGE:
-        //     return { ...state, [action.payload.id]: action.payload };
+        case SEND_MESSAGE:
+            return { ...state, [action.payload.id]: action.payload };
         default:
             return state
     }
