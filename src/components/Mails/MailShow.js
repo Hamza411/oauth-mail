@@ -6,7 +6,6 @@ class MailShow extends React.Component {
 
     componentDidMount() {
         this.props.fetchMessage(this.props.match.params.id)
-        console.log("########", this.props.fetchMessage(this.props.match.params.id))
     }
     render() {
         if (!this.props.mail) {

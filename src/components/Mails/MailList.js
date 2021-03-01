@@ -17,6 +17,7 @@ class MailList extends Component {
             return data.map((thread, index) => {
                 return (
                     <div className="item" key={index}>
+                        <i className="large middle aligned icon envelope"></i>
                         <div className="content">
                             {console.log(thread)}
                             <Link to={`/mails/${thread.id}`} className="header">
