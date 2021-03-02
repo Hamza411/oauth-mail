@@ -42,7 +42,10 @@ class GoogleAuth extends Component {
     }
 
     onSignOutClick = () => {
+
         this.auth.signOut();
+        localStorage.clear();
+        window.location.reload()
     }
 
     renderAuthButton() {

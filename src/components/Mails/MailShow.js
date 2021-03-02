@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchMessage } from '../../actions';
+import history from '../../history';
+import Modal from '../Modal';
 
 class MailShow extends React.Component {
 
@@ -11,18 +13,21 @@ class MailShow extends React.Component {
 
     renderMsg = () => {
         const data = this.props.mail;
-        console.log(data)
+        // console.log(data)
         return data.map((thread, index) => {
             return (
                 <div className="item" key={index}>
-                    {/* {thread.labelIds[2]} */}
-                    <br />
-                    <div className="content">
-                        {thread.snippet}
-                    </div>
+                    <h2>{thread.snippet}</h2>
                 </div>
             )
         })
+    }
+    renderActions() {
+        return (
+            <div>
+                <Link to="/" className="ui button">Close</Link>
+            </div>
+        )
     }
 
     render() {
@@ -31,9 +36,16 @@ class MailShow extends React.Component {
         }
         return (
             <div>
-                {console.log(this.props.mail)}
+                <Modal
+                    title="Message Body "
+                    content={this.renderMsg()}
+                    actions={this.renderActions()}
+                    onDismiss={() => history.push("/")}
+                />
+                {/* {console.log(this.props.mail)} */}
+                {/* <h3>Message Body: </h3>
                 {this.renderMsg()}
-                <Link to="/" className="ui button">Back</Link>
+                <Link to="/" className="ui button">Back</Link> */}
             </div>
         );
     }

@@ -51,15 +51,15 @@ export const sendmessage = (formValues) => async (dispatch, getState) => {
     const token = localStorage.getItem("token")
     const email = localStorage.getItem("email")
     const url = `https://gmail.googleapis.com/gmail/v1/users/${email}/messages/send`
+    let objJsonStr = JSON.stringify(formValues);
+    let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
     // const response = await mails.post("/messages", { ...formValues, userId });\
-    console.log(formValues)
-    const response = await axios.post(url, formValues, {
+    console.log(objJsonB64)
+    const response = await axios.post(url, { objJsonB64 }, {
         headers: {
-            "Authorization": "Bearer " + token
-        },
-        body: JSON.stringify({
-            raw: formValues
-        })
+            "Authorization": "Bearer " + token,
+            'content-type': 'message/rfc822'
+        }
     })
 
     dispatch({ type: SEND_MESSAGE, payload: response.data })
